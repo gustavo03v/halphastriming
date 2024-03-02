@@ -1,52 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site de Filmes e Séries</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .filme {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-    </style>
+    <title>Reprodutor de IPTV</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
-    <header>
-        <h1>Meu Site de Filmes e Séries</h1>
-    </header>
-    <div class="container">
-        <h2>Filmes e Séries</h2>
-        <div class="filme">
-            <h3>Filme 1</h3>
-            <p>Descrição do Filme 1...</p>
-        </div>
-        <div class="filme">
-            <h3>Filme 2</h3>
-            <p>Descrição do Filme 2...</p>
-        </div>
-        <!-- Adicione mais filmes e séries aqui -->
-    </div>
-    <footer>
+    <video id="video"></video>
+    <script>
+        var video = document.getElementById('video');
+        if(Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource('seu_arquivo.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                video.play();
+            });
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = 'seu_arquivo.m3u8';
+            video.addEventListener('loadedmetadata',function() {
+                video.play();
+            });
+        }
+    </script>
+</body>
+</html>
+
         <p>© 2024 Meu Site de Filmes e Séries</p>
     </footer>
 </body>
